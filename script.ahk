@@ -45,6 +45,7 @@ ShowPopup() {
   Refresh()
   duration := Duration * 1000
   SetTimer, ClosePopup, %duration%
+  Gui, 2:Font, norm bold
   Gui, 2:-SysMenu +Owner
   Gui, 2:Color, FFFFFF
   Gui, 2:Add, Text, +Center, %Message%
