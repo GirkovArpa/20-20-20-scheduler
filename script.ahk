@@ -1,6 +1,6 @@
 global Interval := ""
 global Duration := ""
-global Message := "Hello World!"
+global Message := "Hello World!" 
 
 Gui, Add, Text, x12 y9 w140 h30 , Interval (seconds):
 
@@ -18,7 +18,7 @@ Gui, Add, Edit, x12 y99 w160 h70 vMessage gRefresh, %Message%
 
 Gui, Add, Button, x12 y179 w160 h20 gShowPopup, Test
 
-Gui, Show, x470 y165 h212 w187, New GUI Window
+Gui, Show, x470 y165 h212 w187, 20
 
 Gui, -MaximizeBox +Owner +MinimizeBox
 
@@ -36,13 +36,9 @@ TrayClick:
 return
 
 GuiSize(GuiHwnd, EventInfo, Width, Height) {
-  if (A_EventInfo = 1) {
+  if (A_EventInfo = 1) { ; minimize event
     Gui, Hide
   } 
-}
-
-Refresh() {
-  Gui, Submit, NoHide
 }
 
 ShowPopup() {
@@ -51,21 +47,26 @@ ShowPopup() {
   SetTimer, ClosePopup, %duration%
   Gui, 2:-SysMenu +Owner
   Gui, 2:Color, FFFFFF
-  Gui, 2:Add, Text, x12 y9 w90 h20 , %Message%
-  Gui, 2:Show, x470 y165 h100 w200, New GUI Window
+  Gui, 2:Add, Text, +Center, %Message%
+  Gui, 2:Show
   
   SetTimer, ShowPopup, Delete
 }
 
 ClosePopup() {
   Refresh()
-  ;Gui 2:Destroy
   Gui, 2:+SysMenu -MinimizeBox -MaximizeBox +Owner
   SetTimer, ClosePopup, Delete
 }
 
+Refresh() {
+  Gui, Submit, NoHide
+}
+
 StartInterval() {
-  Refresh()
+  Gui, Submit, NoHide
+  SetTimer, ShowPopup, delete
+  SetTimer, ClosePopup, delete
   interval := Interval * 1000
   SetTimer, ShowPopup, %interval%
 }
