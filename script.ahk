@@ -23,15 +23,23 @@ Gui, Show, x470 y165 h212 w187, New GUI Window
 Gui, -MaximizeBox +Owner +MinimizeBox
 
 Menu Tray, Icon
-Menu Tray, Add, "Show / Hide gPodder", TrayClick
-Menu Tray, Default, "Show / Hide gPodder"
+Menu, Tray, NoStandard 
+Menu, Tray, DeleteAll 
+Menu Tray, Add, Settings, TrayClick
+Menu Tray, Default, Settings
 
 StartInterval()
 Return
 
 TrayClick:
-  MsgBox click
+  Gui, Show
 return
+
+GuiSize(GuiHwnd, EventInfo, Width, Height) {
+  if (A_EventInfo = 1) {
+    Gui, Hide
+  } 
+}
 
 Refresh() {
   Gui, Submit, NoHide
@@ -52,7 +60,7 @@ ShowPopup() {
 ClosePopup() {
   Refresh()
   ;Gui 2:Destroy
-  Gui, 2:+SysMenu -MinimizeBox -MaximizeBox
+  Gui, 2:+SysMenu -MinimizeBox -MaximizeBox +Owner
   SetTimer, ClosePopup, Delete
 }
 
