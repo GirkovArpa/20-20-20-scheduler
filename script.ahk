@@ -1,6 +1,6 @@
 global Interval := ""
 global Duration := ""
-global Message := "Hello World!" 
+global Message := "Look away from the computer and look 20 feet away for 20 seconds." 
 
 Gui, Add, Text, x12 y9 w140 h30 , Interval (seconds):
 
